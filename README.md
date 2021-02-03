@@ -12,18 +12,18 @@ I built it mainly to use a demo for on Stream Project and to work with Twitch Ch
 
 Parts Needed for this Build
 
-1 - ESP8266
-1 - Breadboard
-1 - Servo (Used is a 180 degree Servo)
-4 - 330 ohm Resistors (or 220 ohm)
-6 - Black Wires
-2 - Red Wires
-1 - Yellow Wire
-1 - Orange Wire
-1 - Blue Led
-1 - Red Led
-1 - Green Led
-1 - Yellow Led
+1 - ESP8266<br>
+1 - Breadboard<br>
+1 - Servo (Used is a 180 degree Servo)<br>
+4 - 330 ohm Resistors (or 220 ohm)<br>
+6 - Black Wires<br>
+2 - Red Wires<br>
+1 - Yellow Wire<br>
+1 - Orange Wire<br>
+1 - Blue Led<br>
+1 - Red Led<br>
+1 - Green Led<br>
+1 - Yellow Led<br>
 
 You could use 2 Yellow Wires, 1 for the LED and 2nd for Servo or 2 Orange. Honestly your choice, you could be a monster and use all the same colors.
 
