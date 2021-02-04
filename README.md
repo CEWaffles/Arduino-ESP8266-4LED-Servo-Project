@@ -29,3 +29,8 @@ You could use 2 Yellow Wires, 1 for the LED and 2nd for Servo or 2 Orange. Hones
 
 <img src="https://cdn.discordapp.com/attachments/806576851450986586/806604549859180554/Twitch_Project_-_4_LEDs_with_Servo_-_UNO_bb.png" width="50%" height="50%">
 
+RED Led is connected to GPIO 14 = D5<br>
+YELLOW Led is connected to GPIO 16 = D0<br>
+BLUE Led is connected to GPIO  4 = D2<br>
+GREEN  Led is connected to GPIO  2 = D4<br>
+Servo  Led is connected to GPIO  12 = D6<br>
