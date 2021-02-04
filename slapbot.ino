@@ -45,14 +45,14 @@ int YELLOW_PIN = 16;    // GPIO 16 = D0
 int BLUE_PIN = 4;       // GPIO  4 = D2
 int GREEN_PIN = 2;      // GPIO  2 = D4
 
-
 int Slap = 12;  // GPIO  12 = D6 || Servo
 String ircChannel = "";
 
 WiFiClient wiFiClient;
 IRCClient client(IRC_SERVER, IRC_PORT, wiFiClient);
 
-long randNum;     // Random Number used with Servo
+long randNum;       // Random Number used with Servo
+int readVal = 0;    // Varible to store read values
  
 // put your setup code here, to run once:
 void setup() {
@@ -111,7 +111,8 @@ void setup() {
   client.setCallback(callback);
   delay(1200);
   digitalWrite(GREEN_PIN, LOW);
-}
+  
+}   // ===== END SETUP =====
  
 void loop() {
  
@@ -144,21 +145,14 @@ void loop() {
     return;
   }
   client.loop();
-}
+  
+}   // ===== END LOOP =====
 
 // ########## SEND TWITCH MESSAGE ##########
 void sendTwitchMessage(String message) {
   Serial.print("  Trying to Send Message to Twitch Chat...");
   client.sendMessage(ircChannel, message);
   
-}
-
-void setOnly(int color) { 
-//  digitalWrite(color, color == RED_PIN ? HIGH : LOW);
-//  digitalWrite(color, color == YELLOW_PIN ? HIGH : LOW);
-//  digitalWrite(color, color == BLUE_PIN ? HIGH : LOW);
-//  digitalWrite(color, color == GREEN_PIN ? HIGH : LOW); 
-
 }
 
 // ########## CALLBACK FUNCTION ##########
@@ -181,9 +175,16 @@ void callback(IRCMessage ircMessage) {
   
   if (ircMessage.command == "PRIVMSG" && ircMessage.text == "!ledoff") {
       Serial.println("!ledoff command");
-      led_off();      
+      led_off();
   
   }   // End !ledoff Chat Command
+
+  if (ircMessage.command == "PRIVMSG" && ircMessage.text == "!ledstate") {
+      Serial.println("!ledoff command");
+      getState();
+  
+  }   // End !ledoff Chat Command
+
   
   if (ircMessage.command == "PRIVMSG" && ircMessage.text == "!rainbow") {
       Serial.println("!led rainbow command");
@@ -233,6 +234,10 @@ void callback(IRCMessage ircMessage) {
       led01();
   
   }   // End !servo Chat Command
+  
+  // ##########################################################################################
+  // ########################### END FUNCTIONS ADDED BY BUCKNAKED78 ###########################
+  // ##########################################################################################
 
 
   // ##############################
@@ -248,10 +253,7 @@ void callback(IRCMessage ircMessage) {
 
     // #### Subscribed ####
     if (ircMessage.text.indexOf("subscribed") > -1 && ircMessage.nick == "STREAMELEMENTS") {
-      digitalWrite(led, HIGH);
-      delay(10000);
-      digitalWrite(led, LOW);
-      delay(25);
+      led_reverse_rainbow();
    
     }
 
@@ -294,7 +296,42 @@ void callback(IRCMessage ircMessage) {
     return;
   }
   
-} // ########## END CALLBACK FUNCTION ##########
+}
+// ########## ########## ########## ########## 
+// ########## END CALLBACK FUNCTION ##########
+// ########## ########## ########## ########## 
+
+
+// ########## ########## ########## ########## 
+void getState() {   // Get Current State of LEDs and Servo
+  const char* txtmessage;
+  
+  readVal = digitalRead(YELLOW_PIN);   // Read Current State of PIN
+  Serial.print("Yellow: ");
+  Serial.println(readVal);
+  
+  readVal = digitalRead(RED_PIN);   // Read Current State of PIN
+  Serial.print("Red: ");
+  Serial.println(readVal);
+  
+  readVal = digitalRead(BLUE_PIN);   // Read Current State of PIN
+  Serial.print("Blue: ");
+  Serial.println(readVal);
+    
+  readVal = digitalRead(GREEN_PIN);   // Read Current State of PIN
+  Serial.print("Green: ");
+  Serial.println(readVal);
+  
+  readVal = servo.read();   // Read Current State of PIN
+  Serial.print("Servo: ");
+  Serial.println(readVal);
+
+  txtmessage = "Servo: ";
+  txtmessage = txtmessage + readVal;
+  sendTwitchMessage(txtmessage);
+  
+}
+// ########## ########## ########## ########## 
 
 
 // ######################################################################
